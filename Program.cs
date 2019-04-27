@@ -31,16 +31,17 @@ namespace He2
                 Console.ForegroundColor = ConsoleColor.White;
                 string i;
                 i = Console.ReadLine();
+                i = i.Split();
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                if (i == "cnm")
+                if (i[0] == "cnm")
                     Console.WriteLine(Dns.GetHostName());
                 
-                else if (i == "ipls")
+                else if (i[0] == "ipls")
                     foreach (IPAddress ip in Dns.GetHostAddresses(Dns.GetHostName()))
                     {
                         Console.WriteLine(ip);
                     }
-                else if (i == "exit")
+                else if (i[0] == "exit")
                     operate = false;
                 else
                     Console.WriteLine("~cline: command not found");
