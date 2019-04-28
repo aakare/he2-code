@@ -36,7 +36,7 @@ namespace He2
                 if (il[0] == "cnm")
                     Console.WriteLine(Dns.GetHostName());
                 else if (il[0] == "put")
-                    Console.WriteLine(il[1]);
+                    Console.WriteLine(i.SubString(4));
                 else if (il[0] == "ipls")
                     foreach (IPAddress ip in Dns.GetHostAddresses(Dns.GetHostName()))
                     {
