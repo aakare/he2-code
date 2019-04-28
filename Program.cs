@@ -13,7 +13,30 @@ namespace He2
     {
         static void Main(string[] args)
         {
+            
             System.IO.Directory.CreateDirectory(@"C:\He2");
+            
+            List<Plugin> pList = new List<Plugin>();
+
+            string[] plugins = Directory.GetFiles("C:\He2", "*.dll");
+            foreach (string plugin in plugins)
+            {
+                if (!plugin.EndsWith("HePlug.dll"))
+                {
+                    Assembly.LoadFrom(plugin);
+                    foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies())
+                    {
+                        foreach (Type t in a.GetTypes())
+                        {
+                            if (t.GetInterface("Plugin") != null)
+                            {
+                                Plugin p = Activator.CreateInstance(t) as Plugin;
+                                pList.Add(p);
+                            }
+                        }
+                    }
+                }
+            }
             bool operate = true;
             Console.Title = "He2";
             Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -29,6 +52,16 @@ namespace He2
                 i = Console.ReadLine();
                 string[] il = i.Split(' ');
                 Console.ForegroundColor = ConsoleColor.Yellow;
+                bool pluginExed = false;
+                foreach (Plugin plugin in pList)
+                {
+                    if (sCommand[0].ToLower() == plugin.getCommand().ToLower())
+                    {
+                        plugin.run(sCommand.Skip(1).ToArray());
+                        pluginExed = true;
+                        break;
+                    }
+                }
                 if (il[0] == "cnm")
                     Console.WriteLine(Dns.GetHostName());
                 else if (il[0] == "put")
@@ -56,7 +89,8 @@ namespace He2
                     }
 
                 else
-                    Console.WriteLine("~if: command not found");
+                    if (!pluginExed)
+                        Console.WriteLine("~if: command not found");
             }
         }
     }
