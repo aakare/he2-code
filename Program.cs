@@ -11,6 +11,8 @@ namespace He2
     {
         static void Main(string[] args)
         {
+            System.IO.Directory.CreateDirectory(@"C:\He2");
+            string[] files = System.IO.Directory.GetFiles(@"C:\He2", "*.dll");
             bool operate = true;
             Console.Title = "He2";
             Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -36,14 +38,31 @@ namespace He2
                 if (il[0] == "cnm")
                     Console.WriteLine(Dns.GetHostName());
                 else if (il[0] == "put")
-                    Console.WriteLine(i.SubString(4));
+                    Console.WriteLine(i.Substring(4));
                 else if (il[0] == "ipls")
                     foreach (IPAddress ip in Dns.GetHostAddresses(Dns.GetHostName()))
-                    {
                         Console.WriteLine(ip);
-                    }
                 else if (il[0] == "exit")
                     operate = false;
+                else if (il[0] == "clt")
+                    Console.Clear();
+                else if (il[0] == "p")
+                    foreach (string arg in il)
+                    {
+                        if(arg == "--list")
+                        {
+                            Console.WriteLine("HPlug 1.3 | Plugin list");
+                            foreach (string file in files)
+                                Console.WriteLine(file.Substring(7));
+                        }
+                        if (arg == "?" || arg == "h")
+                        {
+                            Console.WriteLine("HPlug 1.3 | help");
+                            Console.WriteLine("? / (empty) - help");
+                            Console.WriteLine("--list - list all plugins");
+                        }
+                    }
+                        
                 else
                     Console.WriteLine("~cline: command not found");
             }
