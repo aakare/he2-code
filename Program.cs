@@ -51,13 +51,13 @@ namespace He2
                     {
                         if(arg == "--list")
                         {
-                            Console.WriteLine("HPlug 1.3 | Plugin list");
+                            Console.WriteLine("HePlug | Plugin list");
                             foreach (string file in files)
                                 Console.WriteLine(file.Substring(7));
                         }
                         if (arg == "?" || arg == "h")
                         {
-                            Console.WriteLine("HPlug 1.3 | help");
+                            Console.WriteLine("HePlug | help");
                             Console.WriteLine("? / (empty) - help");
                             Console.WriteLine("--list - list all plugins");
                         }
