@@ -1,2 +1,2 @@
 # he2-code
-A commandline tool for executing C# and He2 scripts.
+A commandline tool for using `C# with He2`.
