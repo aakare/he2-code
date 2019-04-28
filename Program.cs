@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using HePlug;
 
 namespace He2
 {
@@ -12,24 +14,16 @@ namespace He2
         static void Main(string[] args)
         {
             System.IO.Directory.CreateDirectory(@"C:\He2");
-            string[] files = System.IO.Directory.GetFiles(@"C:\He2", "*.dll");
             bool operate = true;
             Console.Title = "He2";
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine(@"
-██╗  ██╗███████╗██████╗ 
-██║  ██║██╔════╝╚════██╗
-███████║█████╗   █████╔╝
-██╔══██║██╔══╝  ██╔═══╝ 
-██║  ██║███████╗███████╗
-╚═╝  ╚═╝╚══════╝╚══════╝
-                        ");
+            Console.WriteLine();
             while (operate)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write("~" + System.Security.Principal.WindowsIdentity.GetCurrent().Name);
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.Write(" >> ");
+                Console.Write("$ ");
                 Console.ForegroundColor = ConsoleColor.White;
                 string i;
                 i = Console.ReadLine();
@@ -49,11 +43,9 @@ namespace He2
                 else if (il[0] == "p")
                     foreach (string arg in il)
                     {
-                        if(arg == "--list")
+                        if (arg == "--list")
                         {
                             Console.WriteLine("HePlug | Plugin list");
-                            foreach (string file in files)
-                                Console.WriteLine(file.Substring(7));
                         }
                         if (arg == "?" || arg == "h")
                         {
@@ -62,9 +54,9 @@ namespace He2
                             Console.WriteLine("--list - list all plugins");
                         }
                     }
-                        
+
                 else
-                    Console.WriteLine("~cline: command not found");
+                    Console.WriteLine("~if: command not found");
             }
         }
     }
