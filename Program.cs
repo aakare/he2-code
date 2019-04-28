@@ -6,19 +6,18 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using HePlug;
-
 namespace He2
 {
     class Program
     {
         static void Main(string[] args)
         {
-            
+
             System.IO.Directory.CreateDirectory(@"C:\He2");
-            
+
             List<Plugin> pList = new List<Plugin>();
 
-            string[] plugins = Directory.GetFiles("C:\He2", "*.dll");
+            string[] plugins = System.IO.Directory.GetFiles(@"C:\He2", "*.dll");
             foreach (string plugin in plugins)
             {
                 if (!plugin.EndsWith("HePlug.dll"))
@@ -55,42 +54,41 @@ namespace He2
                 bool pluginExed = false;
                 foreach (Plugin plugin in pList)
                 {
-                    if (sCommand[0].ToLower() == plugin.getCommand().ToLower())
+                    if (il[0].ToLower() == "./" + plugin.Name().ToLower())
                     {
-                        plugin.run(sCommand.Skip(1).ToArray());
+                        plugin.Code(il.Skip(1).ToArray());
                         pluginExed = true;
                         break;
                     }
                 }
-                if (il[0] == "cnm")
-                    Console.WriteLine(Dns.GetHostName());
-                else if (il[0] == "put")
-                    Console.WriteLine(i.Substring(4));
-                else if (il[0] == "ipls")
-                    foreach (IPAddress ip in Dns.GetHostAddresses(Dns.GetHostName()))
-                        Console.WriteLine(ip);
-                else if (il[0] == "exit")
+                if (il[0] == "stop")
                     operate = false;
                 else if (il[0] == "clt")
                     Console.Clear();
-                else if (il[0] == "p")
+                else if (il[0] == "?" || il[0] == "wonders")
+                    if (il[1] == "")
+                    {
+                        Console.WriteLine("He2 Wonders");
+                        Console.WriteLine("? - help | arguments: --l - plugin list");
+                        Console.WriteLine("");
+                    }
+                    else
                     foreach (string arg in il)
                     {
-                        if (arg == "--list")
+                        if (arg == "--l")
                         {
                             Console.WriteLine("HePlug | Plugin list");
-                        }
-                        if (arg == "?" || arg == "h")
-                        {
-                            Console.WriteLine("HePlug | help");
-                            Console.WriteLine("? / (empty) - help");
-                            Console.WriteLine("--list - list all plugins");
+                                Console.WriteLine();
+                            foreach(Plugin plugin in pList)
+                                {
+                                    Console.WriteLine("Name > " + plugin.Name() + " > Description > " + plugin.Description() + " > Help > " + plugin.Help());
+                                }
                         }
                     }
 
                 else
-                    if (!pluginExed)
-                        Console.WriteLine("~if: command not found");
+                    if(!pluginExed)
+                        Console.WriteLine("~if: command not found, \"?\" for help.");
             }
         }
     }
